@@ -3,7 +3,7 @@
 {
 	"name": "Python Tutorial",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "ghcr.io/empa-scientific-it/python-tutorial:latest",
+	"image": "ghcr.io/edoardob90/python-tutorial:latest",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
