@@ -42,7 +42,8 @@ COPY --chown=${NB_UID}:${NB_GID} binder/ipython_config.py ${HOME}/.ipython/profi
 
 # Copy the repository late in the build process
 RUN mkdir -p ${REPO}
-COPY --chown=${NB_UID}:${NB_GID} . ${REPO}/
+# No need to copy the repository since it's already in Docker's context
+#COPY --chown=${NB_UID}:${NB_GID} . ${REPO}/
 
 # Set the working directory to the repository
 WORKDIR ${REPO}
