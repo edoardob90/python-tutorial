@@ -2,19 +2,29 @@
 
 A simple Git wrapper for Python tutorial students. This tool abstracts common Git operations so students can focus on learning Python packages without needing deep Git knowledge.
 
+Built with:
+- [Typer](https://typer.tiangolo.com/) for the CLI interface
+- [Rich](https://rich.readthedocs.io/) for beautiful terminal output
+
 ## Installation
 
-Install the tutorial CLI tool using pip:
+Install the tutorial CLI tool using `uv`:
 
 ```bash
-pip install tutorial-cli/
+uv pip install tutorial-cli/
 ```
 
 Or install directly from the tutorial directory:
 
 ```bash
 cd tutorial-cli
-pip install .
+uv pip install .
+```
+
+If you don't have `uv` installed, you can also use regular `pip`:
+
+```bash
+pip install tutorial-cli/
 ```
 
 ## Usage
