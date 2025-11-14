@@ -1,0 +1,29 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "tutorial-cli"
+version = "0.1.0"
+description = "A simple Git wrapper for Python tutorial students"
+authors = [
+    {name = "Python Tutorial Team"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.scripts]
+tutorial = "tutorial_cli.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/epfllibrary/python-tutorial"
