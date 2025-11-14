@@ -7,15 +7,12 @@ Python packages without needing deep Git knowledge.
 """
 
 import subprocess
-import sys
 from pathlib import Path
-from typing import List, Optional
 
 import typer
 from rich.console import Console
 from rich.panel import Panel
-from rich.prompt import Prompt, Confirm
-from rich.syntax import Syntax
+from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
 app = typer.Typer(
@@ -27,7 +24,7 @@ app = typer.Typer(
 console = Console()
 
 
-def run_command(cmd: List[str], capture: bool = False) -> tuple[int, str]:
+def run_command(cmd: list[str], capture: bool = False) -> tuple[int, str]:
     """
     Run a shell command and return the exit code and output.
 
@@ -73,8 +70,12 @@ def config():
         raise typer.Exit(code=1)
 
     # Get current config if it exists
-    _, current_name = run_command(["git", "config", "--global", "user.name"], capture=True)
-    _, current_email = run_command(["git", "config", "--global", "user.email"], capture=True)
+    _, current_name = run_command(
+        ["git", "config", "--global", "user.name"], capture=True
+    )
+    _, current_email = run_command(
+        ["git", "config", "--global", "user.email"], capture=True
+    )
 
     current_name = current_name.strip()
     current_email = current_email.strip()
@@ -101,8 +102,12 @@ def config():
         raise typer.Exit(code=1)
 
     # Set config
-    code1, _ = run_command(["git", "config", "--global", "user.name", name], capture=True)
-    code2, _ = run_command(["git", "config", "--global", "user.email", email], capture=True)
+    code1, _ = run_command(
+        ["git", "config", "--global", "user.name", name], capture=True
+    )
+    code2, _ = run_command(
+        ["git", "config", "--global", "user.email", email], capture=True
+    )
 
     if code1 == 0 and code2 == 0:
         console.print()
@@ -167,7 +172,9 @@ def init():
 def status():
     """Show the status of your repository."""
     if not is_git_repo():
-        console.print("[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first.")
+        console.print(
+            "[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first."
+        )
         raise typer.Exit(code=1)
 
     console.print()
@@ -180,12 +187,7 @@ def status():
 
 @app.command()
 def commit(
-    message: Optional[str] = typer.Option(
-        None,
-        "-m",
-        "--message",
-        help="Commit message"
-    )
+    message: str | None = typer.Option(None, "-m", "--message", help="Commit message"),
 ):
     """Add and commit all changes."""
     console.print()
@@ -193,7 +195,9 @@ def commit(
     console.print()
 
     if not is_git_repo():
-        console.print("[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first.")
+        console.print(
+            "[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first."
+        )
         raise typer.Exit(code=1)
 
     # Check if there are changes to commit
@@ -234,11 +238,15 @@ def commit(
     code, _ = run_command(["git", "remote", "get-url", "origin"], capture=True)
     console.print()
     if code == 0:
-        console.print("[blue]ℹ[/blue] Next step: Use [cyan]tutorial sync[/cyan] to push your changes to GitHub")
+        console.print(
+            "[blue]ℹ[/blue] Next step: Use [cyan]tutorial sync[/cyan] to push your changes to GitHub"
+        )
     else:
         console.print("[blue]ℹ[/blue] Next steps:")
         console.print("  1. Create a repository on GitHub")
-        console.print("  2. Connect it: [cyan]git remote add origin <repository-url>[/cyan]")
+        console.print(
+            "  2. Connect it: [cyan]git remote add origin <repository-url>[/cyan]"
+        )
         console.print("  3. Use [cyan]tutorial sync[/cyan] to push your changes")
 
 
@@ -250,7 +258,9 @@ def sync():
     console.print()
 
     if not is_git_repo():
-        console.print("[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first.")
+        console.print(
+            "[red]✗[/red] Not a Git repository. Run [cyan]tutorial init[/cyan] first."
+        )
         raise typer.Exit(code=1)
 
     # Check if remote is configured
@@ -275,7 +285,9 @@ def sync():
 
     branch = branch.strip()
     if not branch:
-        console.print("[red]✗[/red] No branch found. Make sure you have at least one commit.")
+        console.print(
+            "[red]✗[/red] No branch found. Make sure you have at least one commit."
+        )
         raise typer.Exit(code=1)
 
     console.print(f"[blue]ℹ[/blue] Current branch: {branch}")
@@ -296,7 +308,9 @@ def sync():
     console.print(f"[blue]ℹ[/blue] Pushing to {remote_url}...")
 
     # Check if upstream is set
-    code, _ = run_command(["git", "rev-parse", "--abbrev-ref", f"{branch}@{{upstream}}"], capture=True)
+    code, _ = run_command(
+        ["git", "rev-parse", "--abbrev-ref", f"{branch}@{{upstream}}"], capture=True
+    )
 
     if code != 0:
         # First push - set upstream
@@ -309,7 +323,7 @@ def sync():
     console.print()
     if code == 0:
         console.print("[green]✓[/green] Changes pushed successfully!")
-        console.print(f"[blue]ℹ[/blue] Your code is now on GitHub!")
+        console.print("[blue]ℹ[/blue] Your code is now on GitHub!")
     else:
         console.print("[red]✗[/red] Failed to push changes.")
         console.print()
@@ -332,5 +346,5 @@ def main():
     app()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
